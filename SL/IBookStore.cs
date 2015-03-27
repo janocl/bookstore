@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -32,7 +33,7 @@ namespace SL
         List<Editorial> GetAllEditoriales();
 
         [OperationContract]
-        List<GetAllDataSP> GetAllRecord();
+        List<Detalle> GetAllRecord();
 
         [OperationContract]
         List<Libro> FilterBookByEditorialID(short IDCategory);

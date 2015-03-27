@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Entities;
 using System.Data.Entity;
 using System.Linq.Expressions;
+using System.Data.Entity.Infrastructure;
 
 namespace DAL
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         BookStoreEntities Contexto = null;
 
@@ -23,18 +24,18 @@ namespace DAL
 
 
         // Propiedad que devuelve un conjunto de Entidades
-        private DbSet<TEntity> EntitySet
+        private DbSet<T> EntitySet
         {
             get
             {
-                return Contexto.Set<TEntity>();
+                return Contexto.Set<T>();
             }
         }
 
 
-        public TEntity Create(TEntity toCreate)
+        public T Create(T toCreate)
         {
-            TEntity Result = null;
+            T Result = null;
             try
             {
                 // Se agrega una entidad a un conjunto de entidades.
@@ -50,7 +51,7 @@ namespace DAL
             return Result;
         }
 
-        public bool Delete(TEntity toDelete)
+        public bool Delete(T toDelete)
         {
 
             bool Result = false;
@@ -70,14 +71,14 @@ namespace DAL
             return Result;
         }
 
-        public bool Update(TEntity toUpdate)
+        public bool Update(T toUpdate)
         {
             bool Result = false;
             try
             {
                 EntitySet.Attach(toUpdate);
                 // Se modifica el estado del objeto para indicar a EF que ha sufrido una modificacion y que debe aplicarla en la DB.
-                Contexto.Entry<TEntity>(toUpdate).State = EntityState.Modified; 
+                Contexto.Entry<T>(toUpdate).State = EntityState.Modified; 
                 Result = Contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -87,6 +88,25 @@ namespace DAL
 
             return Result;
         }
+
+
+
+        public List<T> GetAll()
+        {
+            return new List<T>().ToList();
+        }
+
+
+
+        public List<T> GetAll(List<Expression<Func<T, object>>> includes)
+        {
+            DbQuery<T> query = Contexto.Set<T>();
+            includes.ForEach(x => query = (DbQuery<T>)query.Include(x));
+
+            return (List<T>)query.ToList();
+        }
+
+
 
         public List<GetAllDataSP> GetAllRecord() 
         {
@@ -107,9 +127,9 @@ namespace DAL
         }
 
 
-        public TEntity Retrieve(Expression<Func<TEntity, bool>> criteria)
+        public T Retrieve(Expression<Func<T, bool>> criteria)
         {
-            TEntity Result = null;
+            T Result = null;
 
             try
             {
@@ -123,9 +143,9 @@ namespace DAL
             return Result;
         }
 
-        public List<TEntity> Filter(Expression<Func<TEntity, bool>> criteria)
+        public List<T> Filter(Expression<Func<T, bool>> criteria)
         {
-            List<TEntity> Result = null;
+            List<T> Result = null;
             try
             {
                 Result = EntitySet.Where(criteria).ToList();
@@ -141,9 +161,9 @@ namespace DAL
 
 
 
-        public List<TEntity> SelectQuery(Expression<Func<TEntity, TEntity>> criteria)
+        public List<T> SelectQuery(Expression<Func<T, T>> criteria)
         {
-            List<TEntity> Result = null;
+            List<T> Result = null;
             try
             {
                 Result = EntitySet.Select(criteria.Compile()).ToList();
@@ -158,9 +178,9 @@ namespace DAL
             return Result;
         }
 
-        public List<TEntity> SelectMany(Expression<Func<TEntity, IEnumerable<TEntity>>> criteria)
+        public List<T> SelectMany(Expression<Func<T, IEnumerable<T>>> criteria)
         {
-            List<TEntity> Result = null;
+            List<T> Result = null;
 
             try
             {
