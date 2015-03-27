@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="523229b0f7994d1f86990c221830261b" Name="Diagram1">
-        <EntityTypeShape EntityType="LibreriaModel.Editorial" Width="1.5" PointX="7" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.Editorial" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="LibreriaModel.Libro" Width="1.5" PointX="3" PointY="1" IsExpanded="true" FillColor="YellowGreen" />
         <AssociationConnector Association="LibreriaModel.FK_Libros_Editoriales" ManuallyRouted="false" />
       </Diagram>

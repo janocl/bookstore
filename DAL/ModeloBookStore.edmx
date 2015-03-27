@@ -4,56 +4,55 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LibreriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Editoriales">
-          <Key>
-            <PropertyRef Name="IDEditorial" />
-          </Key>
-          <Property Name="IDEditorial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="Direccion" Type="varchar" MaxLength="200" />
-          <Property Name="Telefono" Type="varchar" MaxLength="50" />
-          <Property Name="Web" Type="varchar" MaxLength="100" />
-          <Property Name="E-mail" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Libros">
-          <Key>
-            <PropertyRef Name="IDLibro" />
-          </Key>
-          <Property Name="IDLibro" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ISBN" Type="char" MaxLength="17" Nullable="false" />
-          <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Autor" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="IDEditorial" Type="smallint" Nullable="false" />
-          <Property Name="Paginas" Type="smallint" Nullable="false" />
-          <Property Name="Precio" Type="money" Nullable="false" />
-          <Property Name="Imagen" Type="image" />
-          <Property Name="Publicacion" Type="date" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar(max)" />
-          <Property Name="Stock" Type="smallint" />
-        </EntityType>
-        <Association Name="FK_Libros_Editoriales">
-          <End Role="Editoriales" Type="Self.Editoriales" Multiplicity="1" />
-          <End Role="Libros" Type="Self.Libros" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Editoriales">
-              <PropertyRef Name="IDEditorial" />
-            </Principal>
-            <Dependent Role="Libros">
-              <PropertyRef Name="IDEditorial" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Function Name="GetAllData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="LibreriaModelStoreContainer">
-          <EntitySet Name="Editoriales" EntityType="Self.Editoriales" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Libros" EntityType="Self.Libros" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Libros_Editoriales" Association="Self.FK_Libros_Editoriales">
-            <End Role="Editoriales" EntitySet="Editoriales" />
-            <End Role="Libros" EntitySet="Libros" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="LibreriaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="LibreriaModelStoreContainer">
+    <EntitySet Name="Editoriales" EntityType="LibreriaModel.Store.Editoriales" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Libros" EntityType="LibreriaModel.Store.Libros" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Libros_Editoriales" Association="LibreriaModel.Store.FK_Libros_Editoriales">
+      <End Role="Editoriales" EntitySet="Editoriales" />
+      <End Role="Libros" EntitySet="Libros" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Editoriales">
+    <Key>
+      <PropertyRef Name="IDEditorial" />
+    </Key>
+    <Property Name="IDEditorial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="Direccion" Type="varchar" Nullable="true" MaxLength="200" />
+    <Property Name="Telefono" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="Web" Type="varchar" Nullable="true" MaxLength="100" />
+    <Property Name="E_mail" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Libros">
+    <Key>
+      <PropertyRef Name="IDLibro" />
+    </Key>
+    <Property Name="IDLibro" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ISBN" Type="char" Nullable="false" MaxLength="17" />
+    <Property Name="Titulo" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Autor" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="IDEditorial" Type="smallint" Nullable="false" />
+    <Property Name="Paginas" Type="smallint" Nullable="false" />
+    <Property Name="Precio" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Imagen" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Publicacion" Type="datetime" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar(max)" Nullable="true" />
+    <Property Name="Stock" Type="smallint" Nullable="true" />
+  </EntityType>
+  <Association Name="FK_Libros_Editoriales">
+    <End Role="Editoriales" Type="LibreriaModel.Store.Editoriales" Multiplicity="1" />
+    <End Role="Libros" Type="LibreriaModel.Store.Libros" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Editoriales">
+        <PropertyRef Name="IDEditorial" />
+      </Principal>
+      <Dependent Role="Libros">
+        <PropertyRef Name="IDEditorial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LibreriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -66,8 +65,8 @@
           <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Web" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="E_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Libros" Relationship="Self.FK_Libros_Editoriales" FromRole="Editoriales" ToRole="Libros" />
+          <Property Name="E_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Libro">
           <Key>
@@ -81,7 +80,7 @@
           <Property Name="Paginas" Type="Int16" Nullable="false" />
           <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Publicacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Publicacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Editorial" Relationship="Self.FK_Libros_Editoriales" FromRole="Libros" ToRole="Editoriales" />
           <Property Name="Stock" Type="Int16" />
@@ -127,60 +126,39 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="LibreriaModelStoreContainer" CdmEntityContainer="BookStoreEntities">
-          <EntitySetMapping Name="Editoriales">
-            <EntityTypeMapping TypeName="LibreriaModel.Editorial">
-              <MappingFragment StoreEntitySet="Editoriales">
-                <ScalarProperty Name="IDEditorial" ColumnName="IDEditorial" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Web" ColumnName="Web" />
-                <ScalarProperty Name="E_mail" ColumnName="E-mail" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Libros">
-            <EntityTypeMapping TypeName="LibreriaModel.Libro">
-              <MappingFragment StoreEntitySet="Libros">
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="IDLibro" ColumnName="IDLibro" />
-                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
-                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
-                <ScalarProperty Name="Autor" ColumnName="Autor" />
-                <ScalarProperty Name="IDEditorial" ColumnName="IDEditorial" />
-                <ScalarProperty Name="Paginas" ColumnName="Paginas" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="Publicacion" ColumnName="Publicacion" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetAllData" FunctionName="LibreriaModel.Store.GetAllData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LibreriaModel.GetAllDataSP">
-                <ScalarProperty Name="IDLibro" ColumnName="IDLibro" />
-                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
-                <ScalarProperty Name="Título" ColumnName="Título" />
-                <ScalarProperty Name="Autor" ColumnName="Autor" />
-                <ScalarProperty Name="Páginas" ColumnName="Páginas" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="Publicación" ColumnName="Publicación" />
-                <ScalarProperty Name="Descripción" ColumnName="Descripción" />
-                <ScalarProperty Name="Editorial" ColumnName="Editorial" />
-                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
-                <ScalarProperty Name="Teléfono" ColumnName="Teléfono" />
-                <ScalarProperty Name="Web" ColumnName="Web" />
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LibreriaModelStoreContainer" CdmEntityContainer="BookStoreEntities">
+    <EntitySetMapping Name="Editoriales">
+      <EntityTypeMapping TypeName="IsTypeOf(LibreriaModel.Editorial)">
+        <MappingFragment StoreEntitySet="Editoriales">
+          <ScalarProperty Name="IDEditorial" ColumnName="IDEditorial" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Web" ColumnName="Web" />
+          <ScalarProperty Name="E_mail" ColumnName="E_mail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Libros">
+      <EntityTypeMapping TypeName="IsTypeOf(LibreriaModel.Libro)">
+        <MappingFragment StoreEntitySet="Libros">
+          <ScalarProperty Name="IDLibro" ColumnName="IDLibro" />
+          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Autor" ColumnName="Autor" />
+          <ScalarProperty Name="IDEditorial" ColumnName="IDEditorial" />
+          <ScalarProperty Name="Paginas" ColumnName="Paginas" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+          <ScalarProperty Name="Publicacion" ColumnName="Publicacion" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -194,8 +172,8 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
