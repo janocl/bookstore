@@ -11,6 +11,14 @@ namespace BLL
     public class LibrosBL
     {
 
+        private IRepository<Libro> _repo;
+
+        public LibrosBL() { }
+        public LibrosBL(IRepository<Libro> repo)
+        {
+            this._repo = repo;
+        }
+
         // Crea un nuevo libro.
         public Libro Create(Libro newLibro)
         {
@@ -93,9 +101,9 @@ namespace BLL
         public List<Libro> GetAllBooks()
         {
             List<Libro> Result = null;
-            using (var r = new Repository<Libro>())
+            using (var r = _repo)
             {
-                Result = r.SelectQuery(p => new Libro()
+                Result = _repo.SelectQuery(p => new Libro()
                 {
                     IDLibro = p.IDLibro,
                     ISBN = p.ISBN,
