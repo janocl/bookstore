@@ -6,7 +6,6 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using BLL;
-using Entities;
 
 namespace SL
 {
@@ -15,13 +14,13 @@ namespace SL
     public class BookStore : IBookStore
     {
 
-        private LibrosBL libros = null;
-        private EditorialesBL editoriales = null;
+        private Libros libros = null;
+        private Editoriales editoriales = null;
 
         private BookStore()
         {
-            libros = new LibrosBL();
-            editoriales = new EditorialesBL();       
+            libros = new Libros();
+            editoriales = new Editoriales();       
         }
 
 
@@ -99,9 +98,9 @@ namespace SL
             return Result;        
         }
 
-        public List<Detalle> GetAllRecord()
+        public List<GetAllDataSP> GetAllRecord()
         {
-            List<Detalle> Result = libros.GetAllRecord();
+            List<GetAllDataSP> Result = libros.GetAllRecord();
             return Result;
         }
 

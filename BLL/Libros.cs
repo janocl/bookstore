@@ -8,7 +8,7 @@ using Entities;
 
 namespace BLL
 {
-    public class LibrosBL
+    public class Libros
     {
 
         private IRepository<Libro> _repo;
@@ -195,26 +195,18 @@ namespace BLL
 
 
         // Devuelve una lista del detalle de todos los libros y editoriales.
-        public List<Detalle> GetAllRecord()
+        public List<GetAllDataSP> GetAllRecord()
         {
+            List<GetAllDataSP> Resultado = null;
 
-            DetalleBL detallebl = new DetalleBL();
-            return detallebl.getDetalle();
+            using (var r = new Repository<GetAllDataSP>())
+            {
+                Resultado = r.GetAllRecord();
+            }
 
+            return Resultado;
         }
 
-
-        //public List<lib> GetAllEntities()
-        //{
-        //    List<T> Resultado = null;
-
-        //    using (var r = new Repository<T>())
-        //    {
-        //        Resultado = r.GetAll();
-        //    }
-
-        //    return Resultado;
-        //}
 
 
     }

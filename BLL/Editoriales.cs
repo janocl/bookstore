@@ -8,7 +8,7 @@ using DAL;
 
 namespace BLL
 {
-    public class EditorialesBL
+    public class Editoriales
     {
         // Crea una nueva editorial.
         public Editorial Create(Editorial newEditorial)
