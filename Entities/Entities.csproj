@@ -44,6 +44,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BookStoreDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Detalle.cs" />
     <Compile Include="Editorial.cs">
       <DependentUpon>BookStoreDBModel.tt</DependentUpon>
     </Compile>

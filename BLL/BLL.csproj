@@ -51,8 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editoriales.cs" />
-    <Compile Include="Libros.cs" />
+    <Compile Include="DetalleBL.cs" />
+    <Compile Include="EditorialesBL.cs" />
+    <Compile Include="LibrosBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityConfig.cs" />
   </ItemGroup>

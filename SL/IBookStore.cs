@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using Entities;
 
 namespace SL
 {
@@ -32,7 +33,7 @@ namespace SL
         List<Editorial> GetAllEditoriales();
 
         [OperationContract]
-        List<GetAllDataSP> GetAllRecord();
+        List<Detalle> GetAllRecord();
 
         [OperationContract]
         List<Libro> FilterBookByEditorialID(short IDCategory);

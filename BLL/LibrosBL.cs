@@ -8,16 +8,8 @@ using Entities;
 
 namespace BLL
 {
-    public class Libros
+    public class LibrosBL
     {
-
-        private IRepository<Libro> _repo;
-
-        public LibrosBL() { }
-        public LibrosBL(IRepository<Libro> repo)
-        {
-            this._repo = repo;
-        }
 
         // Crea un nuevo libro.
         public Libro Create(Libro newLibro)
@@ -101,9 +93,9 @@ namespace BLL
         public List<Libro> GetAllBooks()
         {
             List<Libro> Result = null;
-            using (var r = _repo)
+            using (var r = new Repository<Libro>())
             {
-                Result = _repo.SelectQuery(p => new Libro()
+                Result = r.SelectQuery(p => new Libro()
                 {
                     IDLibro = p.IDLibro,
                     ISBN = p.ISBN,
@@ -195,16 +187,10 @@ namespace BLL
 
 
         // Devuelve una lista del detalle de todos los libros y editoriales.
-        public List<GetAllDataSP> GetAllRecord()
+        public List<Detalle> GetAllRecord()
         {
-            List<GetAllDataSP> Resultado = null;
-
-            using (var r = new Repository<GetAllDataSP>())
-            {
-                Resultado = r.GetAllRecord();
-            }
-
-            return Resultado;
+            DetalleBL detallebl = new DetalleBL();
+            return detallebl.getDetalle();
         }
 
 
