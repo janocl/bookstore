@@ -10,6 +10,16 @@ namespace BLL
 {
     public class LibrosBL
     {
+        private readonly IRepository<Libro> irepo;
+
+        public LibrosBL()
+            : this(new Repository<Libro>())
+        { }
+
+        public LibrosBL(IRepository<Libro> repository) 
+        {
+            irepo = repository;
+        }
 
         // Crea un nuevo libro.
         public Libro Create(Libro newLibro)
