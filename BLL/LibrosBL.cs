@@ -25,19 +25,25 @@ namespace BLL
         public Libro Create(Libro newLibro)
         {
             Libro Result = null;
-            using (var r = new Repository<Libro>())
+
+            try
             {
-                Libro libBuscado = r.Retrieve(p => p.Titulo == newLibro.Titulo);
+                Libro libBuscado = irepo.Retrieve(p => p.Titulo == newLibro.Titulo);
 
                 // Si no existe entonces lo creamos.
                 if (libBuscado == null)
                 {
-                    Result = r.Create(newLibro);
+                    Result = irepo.Create(newLibro);
                 }
                 else
                 {
                     throw (new Exception("El Titulo de Libro especificado ya existe..."));
                 }
+            }
+            catch (Exception)
+            {
+                
+                throw;
             }
 
             return Result;
@@ -49,19 +55,25 @@ namespace BLL
         public bool Update(Libro libroToUpdate)
         {
             bool Result = false;
-            using (var r = new Repository<Libro>())
+
+            try
             {
-                Libro libBuscado = r.Retrieve(p => p.Titulo == libroToUpdate.Titulo);
+                Libro libBuscado = irepo.Retrieve(p => p.Titulo == libroToUpdate.Titulo);
 
                 // Si no existe entonces lo creamos.
                 if (libBuscado == null)
                 {
-                    Result = r.Update(libroToUpdate);
+                    Result = irepo.Update(libroToUpdate);
                 }
                 else
                 {
                     throw (new Exception("El Titulo de Libro especificado ya existe"));
                 }
+            }
+            catch (Exception)
+            {
+                
+                throw;
             }
 
             return Result;
@@ -79,10 +91,16 @@ namespace BLL
             {
                 if (Libro.Stock == 0)
                 {
-                    using (var r = new Repository<Libro>())
+                    try
                     {
-                        Result = r.Delete(Libro);
+                        Result = irepo.Delete(Libro);
                     }
+                    catch (Exception)
+                    {
+                        
+                        throw;
+                    }
+
                 }
                 else
                 {
@@ -103,9 +121,9 @@ namespace BLL
         public List<Libro> GetAllBooks()
         {
             List<Libro> Result = null;
-            using (var r = new Repository<Libro>())
+            try
             {
-                Result = r.SelectQuery(p => new Libro()
+                Result = irepo.SelectQuery(p => new Libro()
                 {
                     IDLibro = p.IDLibro,
                     ISBN = p.ISBN,
@@ -118,6 +136,10 @@ namespace BLL
                     Descripcion = p.Descripcion
                 }).ToList();
             }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return Result;
         }
@@ -129,9 +151,13 @@ namespace BLL
         {
             Libro Result = null;
 
-            using (var r = new Repository<Libro>())
+            try
             {
-                Result = r.Retrieve(p => p.IDLibro == ID);
+                Result = irepo.Retrieve(p => p.IDLibro == ID);
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return Result;
@@ -143,9 +169,13 @@ namespace BLL
         public List<Libro> FilterBookByTitulo(string titulo)
         {
             List<Libro> Result = null;
-            using (var r = new Repository<Libro>())
+            try
             {
-                Result = r.Filter(p => p.Titulo.Contains(titulo));
+                Result = irepo.Filter(p => p.Titulo.Contains(titulo));
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return Result;
@@ -157,11 +187,14 @@ namespace BLL
         public List<Libro> FilterByEditorialID(short IDEditorial)
         {
             List<Libro> Result = null;
-            using (var r = new Repository<Libro>())
+            try
             {
-                Result = r.Filter(p => p.IDEditorial == IDEditorial);
+                Result = irepo.Filter(p => p.IDEditorial == IDEditorial);
             }
-
+            catch (Exception)
+            {
+                throw;
+            }
             return Result;
         }
 
@@ -172,10 +205,9 @@ namespace BLL
         {
             List<Libro> Resultado = null;
 
-            using (var r = new Repository<Libro>())
+            try
             {
-
-                Resultado = r.Filter(p => p.Editorial.Nombre.Contains(NombreEditorial))
+                Resultado = irepo.Filter(p => p.Editorial.Nombre.Contains(NombreEditorial))
                             .Select(p => new Libro
                             {
                                 ISBN = p.ISBN,
@@ -191,6 +223,10 @@ namespace BLL
                             .Where(p => p.Stock > 0)
                             .ToList();
             }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return Resultado;
         }
@@ -199,8 +235,16 @@ namespace BLL
         // Devuelve una lista del detalle de todos los libros y editoriales.
         public List<Detalle> GetAllRecord()
         {
-            DetalleBL detallebl = new DetalleBL();
-            return detallebl.getDetalle();
+            try
+            {
+                DetalleBL detallebl = new DetalleBL();
+                return detallebl.getDetalle();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
 
