@@ -10,12 +10,28 @@ namespace BLL
 {
     public class EditorialesBL
     {
+        private readonly IRepository<Editorial> irepo;
+
+        public EditorialesBL()
+            : this(new Repository<Editorial>())
+        { }
+
+        public EditorialesBL(IRepository<Editorial> repository)
+        {
+            irepo = repository;
+        }
+
         // Crea una nueva editorial.
         public Editorial Create(Editorial newEditorial)
         {
-            using (var r = new Repository<Editorial>())
+
+            try
             {
-                newEditorial = r.Create(newEditorial);
+                newEditorial = irepo.Create(newEditorial);
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return newEditorial;
@@ -26,9 +42,13 @@ namespace BLL
         {
             Editorial Result = null;
 
-            using (var r = new Repository<Editorial>())
+            try
             {
-                Result = r.Retrieve( p => p.IDEditorial == ID);
+                Result = irepo.Retrieve(p => p.IDEditorial == ID);
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return Result;
@@ -39,18 +59,22 @@ namespace BLL
         {
 
             List<Editorial> Result = null;
-            using (var r = new Repository<Editorial>())
+
+            try
             {
-                Result = r.SelectQuery(e => new Editorial()
-                { 
+                Result = irepo.SelectQuery(e => new Editorial()
+                {
                     IDEditorial = e.IDEditorial,
                     Nombre = e.Nombre,
                     Direccion = e.Direccion,
                     Telefono = e.Telefono,
                     E_mail = e.E_mail,
                     Web = e.Web,
-                    Libros = e.Libros
                 }).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return Result;
