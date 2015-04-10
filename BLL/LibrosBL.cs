@@ -154,6 +154,19 @@ namespace BLL
             try
             {
                 Result = irepo.Retrieve(p => p.IDLibro == ID);
+                // Seleccionamos solo las propiedades que se necesitan.
+                Result = new Libro() 
+                { 
+                    IDLibro = Result.IDLibro,
+                    ISBN = Result.ISBN,
+                    Titulo = Result.Titulo,
+                    Autor = Result.Autor,
+                    Paginas = Result.Paginas,
+                    Precio = Result.Precio,
+                    Publicacion = Result.Publicacion,
+                    Stock = Result.Stock,
+                    Descripcion = Result.Descripcion
+                };
             }
             catch (Exception)
             {
