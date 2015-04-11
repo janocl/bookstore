@@ -154,19 +154,6 @@ namespace BLL
             try
             {
                 Result = irepo.Retrieve(p => p.IDLibro == ID);
-                // Seleccionamos solo las propiedades que se necesitan.
-                Result = new Libro() 
-                { 
-                    IDLibro = Result.IDLibro,
-                    ISBN = Result.ISBN,
-                    Titulo = Result.Titulo,
-                    Autor = Result.Autor,
-                    Paginas = Result.Paginas,
-                    Precio = Result.Precio,
-                    Publicacion = Result.Publicacion,
-                    Stock = Result.Stock,
-                    Descripcion = Result.Descripcion
-                };
             }
             catch (Exception)
             {
@@ -202,20 +189,7 @@ namespace BLL
             List<Libro> Result = null;
             try
             {
-                var query = irepo.Filter(p => p.IDEditorial == IDEditorial);
-                //Seleccionamos solo las propiedades que necesitemos.
-                Result = query.Select(x => new Libro()
-                                        {
-                                            IDLibro = x.IDLibro,
-                                            Titulo = x.Titulo,
-                                            ISBN = x.ISBN,
-                                            Autor = x.Autor,
-                                            Descripcion = x.Descripcion,
-                                            Stock = x.Stock,
-                                            Publicacion = x.Publicacion,
-                                            Precio = x.Precio,
-                                            Paginas = x.Paginas
-                                        }).ToList();
+                Result = irepo.Filter(p => p.IDEditorial == IDEditorial);
             }
             catch (Exception)
             {

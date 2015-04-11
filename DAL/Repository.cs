@@ -16,6 +16,7 @@ namespace DAL
         public Repository()
         {
             Contexto = new BookStoreEntities();
+            Contexto.Configuration.ProxyCreationEnabled = false;
         }
 
 
